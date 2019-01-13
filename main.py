@@ -59,6 +59,7 @@ def on_message(client, userdata, msg):
 
     if msg.topic == "sensors/get_lux":
         lux = int(msg.payload.decode("utf-8"))
+        print("Lux: " + str(lux))
 
         # Wordclock
         m = 0.05
@@ -69,27 +70,20 @@ def on_message(client, userdata, msg):
         if output > 1.0: output = 1.0
         output = round(output, 2)
 
-        print("Wordclock: " + str(lux) + " " + str(output))
+        print("Wordclock: " + str(output))
 
         client.publish("wordclock/brightness", output, qos=0, retain=False)
 
 
         # Cube
-        m = 0.05
-        b = 0
 
-        output = m * lux + b
-
-        if output > 1.0: output = 1.0
-        output = round(output, 2)
-
-        if output >= 0.3:
+        if lux >= 1:
             binary_brightness = 1
         else:
             binary_brightness = 0
 
 
-        print("Cube: " + str(lux) + " " + str(binary_brightness))
+        print("Cube: " + str(binary_brightness))
 
         client.publish("cube/brightness", binary_brightness, qos=0, retain=False)
 
