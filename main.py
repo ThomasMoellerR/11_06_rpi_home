@@ -4,7 +4,7 @@ import paho.mqtt.client as mqtt
 import argparse
 import os
 
-def thread1():
+def thread2():
 
 
     while True:
@@ -12,7 +12,7 @@ def thread1():
 
 
 
-def thread2():
+def thread1():
     global client
 
     while True:
@@ -103,4 +103,5 @@ t1= threading.Thread(target=thread1)
 t2= threading.Thread(target=thread2)
 
 t1.start()
+time.sleep(1)
 t2.start()
